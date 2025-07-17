@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dasbor Anggota - TIDAR</title>
+    <title>Dasbor Anggota - PSI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,7 +12,8 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f2f5;
+            /* Mengubah background body sesuai permintaan, Putih Gradasi Merah */
+            background: linear-gradient(to bottom, #FFFFFF, #FFF0F0); /* Putih gradasi ke merah muda sangat pucat */
         }
         .photo-upload-container {
             position: relative;
@@ -39,45 +40,163 @@
             font-family: 'Playfair Display', serif;
         }
 
-        /* --- STYLING KTA BARU (INSPIRASI GOLKAR) --- */
-        .header-red-new {
-            background-color: #c81e1e; /* Warna Merah */
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23FFFFFF" fill-opacity="0.1" d="M0,224L48,208C96,192,192,160,288,165.3C384,171,480,213,576,208C672,203,768,149,864,138.7C960,128,1056,160,1152,165.3C1248,171,1344,149,1392,138.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>');
+        /* --- STYLING KTA PSI BARU --- */
+        .kta-card {
+            background-color: #FFFFFF; /* Dasar putih */
+            border: 1px solid #e2e8f0; /* Garis abu-abu muda */
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 400px; /* Batasi lebar KTA */
+            aspect-ratio: 1.6; /* Rasio standar kartu kredit 1.6:1 */
+        }
+
+        .kta-header {
+            background-color: #E20000; /* Merah PSI */
+            color: white;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden; /* Untuk memastikan gelombang terpotong */
+        }
+        .kta-header::before {
+            content: '';
+            position: absolute;
+            bottom: -50px; /* Posisi gelombang di bawah */
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.15); /* Gelombang putih transparan */
+            border-radius: 50%;
+            transform: scaleX(1.5);
+            opacity: 0.6;
+            z-index: 0;
+        }
+        .kta-header img {
+            z-index: 1; /* Pastikan logo dan QR di atas gelombang */
+        }
+
+        .kta-body {
+            flex-grow: 1;
+            padding: 1rem;
+            display: flex;
+            gap: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kta-body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('Backgroundpsi.jpg'); /* Gambar background PSI */
             background-size: cover;
+            background-position: center;
+            opacity: 0.15; /* Opasitas untuk transparan */
+            z-index: 0;
+            pointer-events: none; /* Agar tidak menghalangi interaksi */
         }
 
-        .body-yellow-new {
-            background-color: #fde047; /* Warna Kuning (Tailwind yellow-300) */
-            /* Watermark diubah menjadi format PNG */
-            background-image: url('logo-tidar.png');
-            background-size: 80%;
-            background-position: center 10px;
-            background-repeat: no-repeat;
+        .kta-data {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 1; /* Pastikan teks data di atas background */
         }
 
-        .data-label-new {
-            font-size: 0.55rem; /* 8.8px */
-            font-weight: 700;
-            color: #4b5563; /* gray-600 */
-            letter-spacing: 0.05em;
-            margin-bottom: -2px;
-        }
-
-        .data-value-new {
+        .data-label-kta {
+            font-size: 0.6rem; /* Ukuran font lebih kecil untuk label */
             font-weight: 600;
+            color: #333333; /* Hitam untuk label */
+            margin-bottom: -2px; /* Mengurangi spasi antara label dan value */
+            text-transform: uppercase;
+        }
+
+        .data-value-kta {
+            font-size: 0.8rem; /* Ukuran font untuk nilai data */
+            font-weight: 700;
             line-height: 1.2;
+            color: #1a202c; /* Hitam gelap untuk nilai */
+        }
+
+        .kta-footer {
+            background-color: #333333; /* Hitam untuk footer KTA */
+            color: white;
+            padding: 0.3rem 1rem;
+            font-size: 0.7rem;
+            text-align: right;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Responsive adjustments for KTA */
+        @media (max-width: 768px) {
+            .kta-card {
+                max-width: 100%; /* KTA akan mengambil lebar penuh di mobile */
+            }
+            .kta-body {
+                flex-direction: column; /* Tata letak vertikal di mobile */
+                align-items: center;
+                text-align: center;
+                gap: 0.5rem;
+            }
+            .kta-photo {
+                width: 80px; /* Ukuran foto lebih kecil di mobile */
+                height: 80px;
+            }
+            .kta-data {
+                text-align: center; /* Teks data di tengah di mobile */
+            }
+            .data-label-kta {
+                font-size: 0.5rem;
+            }
+            .data-value-kta {
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Dashboard Background with White Transparent Overlay */
+        .main-dashboard-bg {
+            background-image: url('Backgroundpsi.jpg'); /* Background PSI dari file yang diupload */
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            min-height: calc(100vh - 4rem); /* Sesuaikan tinggi dengan header/footer */
+        }
+        .main-dashboard-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.7); /* Overlay putih transparan (70% opasitas) */
+            z-index: 0;
+        }
+        .main-dashboard-content {
+            position: relative;
+            z-index: 1; /* Pastikan konten di atas overlay */
         }
     </style>
 </head>
 <body class="bg-gray-100">
 
-    <header class="bg-gradient-to-r from-red-800 to-red-900 text-white shadow-lg sticky top-0 z-50">
+    <header class="bg-gradient-to-r from-red-700 to-red-900 text-white shadow-lg sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center">
                     <a href="#" class="flex-shrink-0 flex items-center">
-                        <img src="logo-tidar.png" alt="Logo TIDAR" class="h-10 w-10 mr-2">
-                        <span class="font-bold text-xl">Dasbor Anggota TIDAR</span>
+                        <img src="psi logo.png" alt="Logo PSI" class="h-10 w-10 mr-2 rounded-full bg-white p-1">
+                        <span class="font-bold text-xl">Dasbor Anggota PSI</span>
                     </a>
                 </div>
                 <div class="flex items-center">
@@ -89,8 +208,8 @@
         </div>
     </header>
 
-    <main class="py-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <main class="py-10 main-dashboard-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 main-dashboard-content">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
                 <div class="lg:col-span-1">
@@ -127,12 +246,11 @@
 
     <footer class="bg-gray-800 text-white mt-12">
         <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-center items-center">
-            <img src="logo-tidar.png" alt="Logo TIDAR Footer" class="h-6 w-6 mr-2">
-            <p class="text-sm">&copy; 2025 Tunas Indonesia Raya. Seluruh Hak Cipta Dilindungi.</p>
+            <img src="psi logo.png" alt="Logo PSI Footer" class="h-6 w-6 mr-2 rounded-full bg-white p-0.5">
+            <p class="text-sm">&copy; 2025 Partai Solidaritas Indonesia. Seluruh Hak Cipta Dilindungi.</p>
         </div>
     </footer>
 
-<!-- SCRIPT UTAMA APLIKASI -->
 <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js";
@@ -144,13 +262,13 @@
 
     // Your web app's Firebase configuration
     const firebaseConfig = {
-        apiKey: "AIzaSyBJ776Uf9LVJKo3pgI1_DtcsyCHKAdEcU4",
-        authDomain: "tidar-anggota.firebaseapp.com",
-        projectId: "tidar-anggota",
-        storageBucket: "tidar-anggota.firebasestorage.app",
-        messagingSenderId: "778187622209",
-        appId: "1:778187622209:web:642375ca3cc51aba97c3c0"
-        // measurementId: "G-LBHME02NT1" // Aktifkan jika Anda menggunakan Analytics dan tambahkan getAnalytics
+        apiKey: "AIzaSyDbPGLMcEpmQaiJvvNaX72PAUdvnWksTVA",
+        authDomain: "psi-anggota.firebaseapp.com",
+        projectId: "psi-anggota",
+        storageBucket: "psi-anggota.firebasestorage.app",
+        messagingSenderId: "601055430305",
+        appId: "1:601055430305:web:ff841b1267c88ac21912e0",
+        measurementId: "G-RH5K04X3KV"
     };
 
     // Initialize Firebase
@@ -256,57 +374,50 @@
                         const fullAddress = addressParts.join(', ');
 
                         contentContainer.innerHTML = `
-                        <div class="aspect-[88/55] w-full max-w-xl mx-auto flex flex-col font-sans shadow-lg rounded-xl overflow-hidden border border-gray-300">
-                            <div class="header-red-new relative flex items-center justify-between p-2 text-white">
-                                <img src="logo-tidar.png" alt="Logo TIDAR" class="h-14 w-14 z-10">
-                                <div class="text-center z-10">
-                                    <p class="font-bold text-xl tracking-wider">KARTU TANDA ANGGOTA</p>
-                                    <p class="text-sm font-semibold -mt-1 tracking-wide">TUNAS INDONESIA RAYA</p>
-                                </div>
-                                <div class="h-14 w-14 flex items-center justify-center">
-                                    <img src="${qrCodeUrl}" alt="QR Code" class="h-14 w-14 rounded-md bg-white p-0.5 z-10">
-                                </div>
-                            </div>
-
-                            <div class="body-yellow-new flex-grow p-3 flex flex-col">
-                                <div class="flex-grow flex gap-3">
-                                    <div class="w-1/3 flex-shrink-0 pt-1">
-                                        <img src="${user.photoURL}?t=${new Date().getTime()}" alt="Foto Profil" class="w-full object-cover border-2 border-white rounded-lg shadow-md aspect-square">
+                        <div class="flex justify-center items-center w-full">
+                            <div class="kta-card">
+                                <div class="kta-header">
+                                    <img src="psi logo.png" alt="Logo PSI" class="h-12 w-12 mr-2 rounded-full bg-white p-1 z-10">
+                                    <div class="text-center z-10">
+                                        <p class="font-bold text-lg tracking-wider">KARTU TANDA ANGGOTA</p>
+                                        <p class="text-xs font-semibold -mt-1 tracking-wide">PARTAI SOLIDARITAS INDONESIA</p>
                                     </div>
-
-                                    <div class="w-2/3 flex flex-col justify-center space-y-1.5 text-gray-800">
-                                        <div>
-                                            <p class="data-label-new">NAMA</p>
-                                            <p class="data-value-new text-sm font-bold">${(userData.name || displayName).toUpperCase()}</p>
-                                        </div>
-                                        <div>
-                                            <p class="data-label-new">ID ANGGOTA</p>
-                                            <p class="data-value-new text-xs font-mono">${uid}</p>
-                                        </div>
-                                        <div>
-                                            <p class="data-label-new">TEMPAT, TANGGAL LAHIR</p>
-                                            <p class="data-value-new text-xs">${ttl.toUpperCase()}</p>
-                                        </div>
-                                        <div>
-                                            <p class="data-label-new">ALAMAT</p>
-                                            <p class="data-value-new text-xs leading-snug">${fullAddress.toUpperCase()}</p>
-                                        </div>
-                                        <div>
-                                            <p class="data-label-new">KOTA/KABUPATEN</p>
-                                            <p class="data-value-new text-xs">${(userData.alamat?.kota || '').toUpperCase()}</p>
-                                        </div>
+                                    <div class="h-12 w-12 flex items-center justify-center">
+                                        <img src="${qrCodeUrl}" alt="QR Code" class="h-12 w-12 rounded-md bg-white p-0.5 z-10">
                                     </div>
                                 </div>
 
-                                <div class="mt-auto flex justify-end -mb-1">
-                                    <div class="w-2/5 text-center">
-                                        <p class="text-xs font-bold text-gray-800" style="font-size: 0.6rem;">KETUA UMUM</p>
-                                        <div class="relative h-10 my-0.5">
-                                            <img src="Tanda_Tangan_Prabowo_Subianto.png" alt="Tanda Tangan" class="h-full absolute left-1/2 -translate-x-1/2 z-10">
-                                            <img src="logo-tidar.png" alt="Stempel" class="h-12 absolute right-5 top-1/2 -translate-y-1/2 opacity-40 z-20">
-                                        </div>
-                                        <p class="font-bold text-xs border-t-2 border-gray-500 pt-0.5 text-gray-800">PRABOWO SUBIANTO</p>
+                                <div class="kta-body">
+                                    <div class="w-1/3 flex-shrink-0 pt-1 flex items-center justify-center">
+                                        <img src="${user.photoURL}?t=${new Date().getTime()}" alt="Foto Profil" class="kta-photo w-full object-cover border-2 border-red-500 rounded-lg shadow-md aspect-square">
                                     </div>
+
+                                    <div class="kta-data">
+                                        <div>
+                                            <p class="data-label-kta">NAMA</p>
+                                            <p class="data-value-kta">${(userData.name || displayName).toUpperCase()}</p>
+                                        </div>
+                                        <div>
+                                            <p class="data-label-kta">ID ANGGOTA</p>
+                                            <p class="data-value-kta font-mono">${uid}</p>
+                                        </div>
+                                        <div>
+                                            <p class="data-label-kta">TEMPAT, TANGGAL LAHIR</p>
+                                            <p class="data-value-kta">${ttl.toUpperCase()}</p>
+                                        </div>
+                                        <div>
+                                            <p class="data-label-kta">ALAMAT</p>
+                                            <p class="data-value-kta leading-snug">${fullAddress.toUpperCase()}</p>
+                                        </div>
+                                        <div>
+                                            <p class="data-label-kta">KOTA/KABUPATEN</p>
+                                            <p class="data-value-kta">${(userData.alamat?.kota || '').toUpperCase()}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="kta-footer">
+                                    <p>&copy; 2025 Partai Solidaritas Indonesia. Seluruh Hak Cipta Dilindungi.</p>
                                 </div>
                             </div>
                         </div>
